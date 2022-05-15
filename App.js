@@ -1,20 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import useNavigation from "./Hooks/useNavigation";
+import CategoryScreen from "./Screems/CategoryScreen";
+import DetailScreen from "./Screems/DetailScreen";
+import ProductsScreen from "./Screems/ProductsScreen";
 
-export default function App() {
+const App = () => {
+  const { categorySelected, productSelected } = useNavigation();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      {!categorySelected ? (
+        <CategoryScreen />
+      ) : !productSelected ? (
+        <ProductsScreen category={categorySelected} />
+      ) : (
+        <DetailScreen />
+      )}
+    </SafeAreaView>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const styles = StyleSheet.create({});
+
+export default App;
