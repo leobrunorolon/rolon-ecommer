@@ -1,11 +1,9 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import useNavigation from "../Hooks/useNavigation";
 
-const GoBack = (type, data) => {
-  const { handleNavigation } = useNavigation();
+const GoBack = ({ onPress }) => {
   return (
-    <TouchableOpacity onPress={() => handleNavigation(type, data)}>
+    <TouchableOpacity onPress={onPress}>
       <Text>GoBack</Text>
     </TouchableOpacity>
   );

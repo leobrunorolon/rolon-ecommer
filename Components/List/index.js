@@ -1,24 +1,12 @@
 import { StyleSheet, Text, FlatList, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import CategoryItem from "./CategoryItem";
 import ProductItem from "./ProductItem";
-import useNavigation from "../../Hooks/useNavigation";
 
-const List = ({ itemType, data }) => {
-  const { handleNavigation, categorySelected, productSelected } =
-    useNavigation();
-  console.log(categorySelected);
-  console.log(productSelected);
+const List = ({ itemType = "category", data, onPress }) => {
   const fnRender = ({ item }) => {
     return (
-      <TouchableOpacity
-        onPress={() =>
-          handleNavigation(
-            itemType,
-            itemType === "category" ? item.title : item.id
-          )
-        }
-      >
+      <TouchableOpacity onPress={() => onPress(item)}>
         {itemType === "category" ? (
           <CategoryItem category={item} />
         ) : itemType === "product" ? (

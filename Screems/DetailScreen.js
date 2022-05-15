@@ -1,15 +1,19 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import Header from "../Components/Header";
 import GoBack from "../Components/GoBack";
 
-const DetailScreen = () => {
+const DetailScreen = ({ product, handleProduct }) => {
   return (
-    <View>
-      <Header title={"detailScreen"} />
-      <Text>DetailScreen</Text>
-      <GoBack type={"product"} data={null} />
-    </View>
+    <>
+      <Header title={product.title} />
+      <View>
+        <Image source={{ uri: product.image }} resizeMode="cover" />
+        <Text>{product.description}</Text>
+        <Text>$ {product.price}</Text>
+        <GoBack onPress={() => handleProduct(null)} />
+      </View>
+    </>
   );
 };
 

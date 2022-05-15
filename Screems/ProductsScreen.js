@@ -7,26 +7,27 @@ import List from "../Components/List";
 import { PRODUCTS } from "../Data/products";
 import useFilter from "../Hooks/useFilter";
 
-const ProductsScreen = ({ category }) => {
-  const [input, setInput] = useState();
-  const [inicialProducts, setInicialProducts] = useState([]);
-  const { filter } = useFilter(input, inicialProducts);
+const ProductsScreen = ({ category, handleProduct, handleCategory }) => {
+  const [input, setInput] = useState("");
+  const [initialProducts, setInitialProducts] = useState([]);
+  const { filter } = useFilter(input, initialProducts);
 
   useEffect(() => {
-    const productFilteres = PRODUCTS.filter(
-      (item) => item.category === category
+    const productosIniciales = PRODUCTS.filter(
+      (product) => product.category === category.title
     );
-    setInicialProducts(productFilteres);
-  }, [category]);
+    setInitialProducts(productosIniciales);
+  }, []);
+
   return (
     <View>
-      <Header title={"ProductScreen"} />
+      <Header title={category.title} />
       <Searcher input={input} setInput={setInput} />
       <Text>ProductsScreen</Text>
       <View>
-        <List itemType={"product"} data={filter} />
+        <List data={filter} itemType={"product"} onPress={handleProduct} />
       </View>
-      <GoBack type={"category"} data={null} />
+      <GoBack onPress={() => handleCategory(null)} />
     </View>
   );
 };

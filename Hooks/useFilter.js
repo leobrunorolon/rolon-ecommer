@@ -1,8 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
 
 const useFilter = (input, data) => {
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState([]);
 
   useEffect(() => {
     if (input === "") setFilter(data);
@@ -12,10 +11,8 @@ const useFilter = (input, data) => {
       );
       setFilter(itemFiltered);
     }
-  }, [input]);
+  }, [input, data]);
   return { filter };
 };
 
 export default useFilter;
-
-const styles = StyleSheet.create({});
