@@ -5,10 +5,13 @@ import Searcher from "../Components/Searcher";
 import List from "../Components/List";
 import useFilter from "../Hooks/useFilter";
 import { CATEGORIES } from "../Data/categories";
+import Title from "../Components/Title";
+import useDimensions from "../Hooks/useDimensions";
 
 const CategoryScreen = ({ handleCategory }) => {
   const [input, setInput] = useState("");
   const { filter } = useFilter(input, CATEGORIES);
+  const { dimensions } = useDimensions();
   const handleSelectedCategory = (category) => {
     handleCategory(category);
   };
@@ -16,7 +19,7 @@ const CategoryScreen = ({ handleCategory }) => {
     <View>
       <Header />
       <Searcher input={input} setInput={setInput} />
-      <Text>Category Screen list</Text>
+      <Title title={"Category"} />
       <View>
         <List data={filter} onPress={handleSelectedCategory} />
       </View>

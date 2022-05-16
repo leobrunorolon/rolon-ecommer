@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import Header from "../Components/Header";
 import Searcher from "../Components/Searcher";
@@ -6,6 +13,8 @@ import GoBack from "../Components/GoBack";
 import List from "../Components/List";
 import { PRODUCTS } from "../Data/products";
 import useFilter from "../Hooks/useFilter";
+import ItemFound from "../Components/ItemFound";
+import Title from "../Components/Title";
 
 const ProductsScreen = ({ category, handleProduct, handleCategory }) => {
   const [input, setInput] = useState("");
@@ -20,15 +29,23 @@ const ProductsScreen = ({ category, handleProduct, handleCategory }) => {
   }, []);
 
   return (
-    <View>
-      <Header title={category.title} />
-      <Searcher input={input} setInput={setInput} />
-      <Text>ProductsScreen</Text>
-      <View>
-        <List data={filter} itemType={"product"} onPress={handleProduct} />
-      </View>
-      <GoBack onPress={() => handleCategory(null)} />
-    </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.keyboardAvoid}
+    >
+      <Header title={category.title.toUpperCase()} />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <>
+          <Searcher input={input} setInput={setInput} />
+          <Title title={"Products"} />
+          <ItemFound item={filter} />
+          <View>
+            <List data={filter} itemType={"product"} onPress={handleProduct} />
+          </View>
+          <GoBack onPress={() => handleCategory(null)} />
+        </>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 

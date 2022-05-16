@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { colors } from "../Styles/colors";
 
-const Header = ({ title = "E-commers" }) => {
+const Title = ({ title }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{title}</Text>
@@ -10,14 +10,14 @@ const Header = ({ title = "E-commers" }) => {
   );
 };
 
-export default Header;
+export default Title;
 
 const styles = StyleSheet.create({
   container: {
     width: "100%",
     backgroundColor: colors.black,
     justifyContent: "center",
-    paddingVertical: 20,
+    paddingVertical: 5,
   },
   text: {
     textAlign: "center",

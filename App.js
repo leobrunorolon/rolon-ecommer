@@ -30,23 +30,17 @@ const App = () => {
   // }
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <>
-        {!categorySelected ? (
-          <CategoryScreen handleCategory={handleCategory} />
-        ) : !productSelected ? (
-          <ProductsScreen
-            category={categorySelected}
-            handleProduct={handleProduct}
-            handleCategory={handleCategory}
-          />
-        ) : (
-          <DetailScreen
-            product={productSelected}
-            handleProduct={handleProduct}
-          />
-        )}
-      </>
-      //{" "}
+      {!categorySelected ? (
+        <CategoryScreen handleCategory={handleCategory} />
+      ) : !productSelected ? (
+        <ProductsScreen
+          category={categorySelected}
+          handleProduct={handleProduct}
+          handleCategory={handleCategory}
+        />
+      ) : (
+        <DetailScreen product={productSelected} handleProduct={handleProduct} />
+      )}
     </SafeAreaView>
   );
 };
