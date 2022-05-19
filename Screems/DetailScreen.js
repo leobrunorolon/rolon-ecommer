@@ -1,26 +1,40 @@
 import { StyleSheet, Text, View, Image } from "react-native";
-import React from "react";
-import Header from "../Components/Header";
+import React, { useState, useEffect } from "react";
 import GoBack from "../Components/GoBack";
 import { colors } from "../Styles/colors";
+import { PRODUCTS } from "../Data/products";
 
-const DetailScreen = ({ product, handleProduct }) => {
+const DetailScreen = ({ route, navigation }) => {
+  const [product, setProduct] = useState(null);
+  const { productId } = route.params;
+
+  useEffect(() => {
+    const productSelected = PRODUCTS.find(
+      (product) => product.id === productId
+    );
+    setProduct(productSelected);
+  }, [productId]);
+
+  const handleBack = () => {
+    navigation.goBack();
+  };
   return (
-    <>
-      <Header title={product.title} />
-      <View style={styles.container}>
-        <Image
-          style={styles.image}
-          source={{ uri: product.image }}
-          resizeMode="contain"
-        />
-        <View style={styles.description}>
-          <Text style={styles.descriptionText}>{product.description}</Text>
-          <Text style={styles.priceText}>$ {product.price}</Text>
+    product && (
+      <>
+        <View style={styles.container}>
+          <Image
+            style={styles.image}
+            source={{ uri: product.image }}
+            resizeMode="contain"
+          />
+          <View style={styles.description}>
+            <Text style={styles.descriptionText}>{product.description}</Text>
+            <Text style={styles.priceText}>$ {product.price}</Text>
+          </View>
         </View>
-      </View>
-      <GoBack onPress={() => handleProduct(null)} />
-    </>
+        <GoBack onPress={handleBack} />
+      </>
+    )
   );
 };
 
