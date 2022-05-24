@@ -27,7 +27,7 @@ const ProductsScreen = ({ navigation, route }) => {
   }, [categoryTitle]);
 
   const handleDetailProduct = (product) => {
-    navigation.navigate("detail", {
+    navigation.navigate("Detail", {
       productId: product.id,
       productTitle: product.title,
     });

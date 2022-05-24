@@ -3,7 +3,8 @@ expo doctor --fix-dependencies
 */
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import MainNavigator from "./Navigation/Shop";
+import MainNavigator from "./Navigation";
+
 // import {useFonts} from 'expo-font';
 
 const App = () => {

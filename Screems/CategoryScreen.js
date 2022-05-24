@@ -12,7 +12,7 @@ const CategoryScreen = ({ navigation }) => {
   const { dimensions } = useDimensions();
 
   const handleSelectedCategory = (category) => {
-    navigation.push("products", {
+    navigation.push("Products", {
       categoryId: category.id,
       categoryTitle: category.title,
     });
