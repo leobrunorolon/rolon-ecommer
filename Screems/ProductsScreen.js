@@ -4,31 +4,26 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
+  Platform,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import Searcher from "../Components/Searcher";
 import GoBack from "../Components/GoBack";
 import List from "../Components/List";
-import { PRODUCTS } from "../Data/products";
+import { useDispatch, useSelector } from "react-redux";
 import useFilter from "../Hooks/useFilter";
 import ItemFound from "../Components/ItemFound";
 
 const ProductsScreen = ({ navigation, route }) => {
   const [input, setInput] = useState("");
-  const [initialProducts, setInitialProducts] = useState([]);
-  const { categoryTitle } = route.params;
-  const { filter } = useFilter(input, initialProducts);
-
-  useEffect(() => {
-    const productosIniciales = PRODUCTS.filter(
-      (product) => product.category === categoryTitle
-    );
-    setInitialProducts(productosIniciales);
-  }, [categoryTitle]);
+  const { filter } = useFilter(input, productsByCategory);
+  const { products } = useSelector((state) => state.products.value);
+  const { productsByCategory } = useSelector((state) => state.products.value);
+  const dispatch = useDispatch();
 
   const handleDetailProduct = (product) => {
+    dispatch(setProductSelected(product.id));
     navigation.navigate("Detail", {
-      productId: product.id,
       productTitle: product.title,
     });
   };

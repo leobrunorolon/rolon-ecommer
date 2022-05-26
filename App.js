@@ -3,7 +3,9 @@ expo doctor --fix-dependencies
 */
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Provider } from "react-redux";
 import MainNavigator from "./Navigation";
+import store from "./Store";
 
 // import {useFonts} from 'expo-font';
 
@@ -17,9 +19,11 @@ const App = () => {
   //   return <ActivityIndicator />;
   // }
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    // <SafeAreaView style={{ flex: 1 }}>
+    <Provider store={store}>
       <MainNavigator />
-    </SafeAreaView>
+    </Provider>
+    // </SafeAreaView>
   );
 };
 

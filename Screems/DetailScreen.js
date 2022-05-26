@@ -3,17 +3,19 @@ import React, { useState, useEffect } from "react";
 import GoBack from "../Components/GoBack";
 import { colors } from "../Styles/colors";
 import { PRODUCTS } from "../Data/products";
+import { useSelector } from "react-redux";
 
 const DetailScreen = ({ route, navigation }) => {
-  const [product, setProduct] = useState(null);
-  const { productId } = route.params;
+  const { productSelected: product } = useSelector(
+    (state) => state.products.value
+  );
 
-  useEffect(() => {
-    const productSelected = PRODUCTS.find(
-      (product) => product.id === productId
-    );
-    setProduct(productSelected);
-  }, [productId]);
+  // useEffect(() => {
+  //   const productSelected = PRODUCTS.find(
+  //     (product) => product.id === productId
+  //   );
+  //   setProduct(productSelected);
+  // }, [productId]);
 
   const handleBack = () => {
     navigation.goBack();
