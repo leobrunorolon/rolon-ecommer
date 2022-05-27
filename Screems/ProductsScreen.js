@@ -13,12 +13,12 @@ import List from "../Components/List";
 import { useDispatch, useSelector } from "react-redux";
 import useFilter from "../Hooks/useFilter";
 import ItemFound from "../Components/ItemFound";
+import { setProductSelected } from "../features/products";
 
 const ProductsScreen = ({ navigation, route }) => {
   const [input, setInput] = useState("");
-  const { filter } = useFilter(input, productsByCategory);
-  const { products } = useSelector((state) => state.products.value);
   const { productsByCategory } = useSelector((state) => state.products.value);
+  const { filter } = useFilter(input, productsByCategory);
   const dispatch = useDispatch();
 
   const handleDetailProduct = (product) => {
@@ -47,8 +47,8 @@ const ProductsScreen = ({ navigation, route }) => {
               itemType={"product"}
               onPress={handleDetailProduct}
             />
+            <GoBack onPress={handleBack} />
           </View>
-          <GoBack onPress={handleBack} />
         </>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
