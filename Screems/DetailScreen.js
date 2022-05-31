@@ -13,7 +13,7 @@ const DetailScreen = ({ route, navigation }) => {
   };
   return (
     product && (
-      <>
+      <View style={{ flex: 1 }}>
         <View style={styles.container}>
           <Image
             style={styles.image}
@@ -26,7 +26,7 @@ const DetailScreen = ({ route, navigation }) => {
           </View>
         </View>
         <GoBack onPress={handleBack} />
-      </>
+      </View>
     )
   );
 };
@@ -37,15 +37,16 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 40,
+    marginTop: 20,
   },
   image: {
-    height: 250,
-    width: 250,
+    height: 200,
+    width: 200,
+    borderRadius: 10,
   },
   description: {
-    margin: 40,
-    height: 200,
+    margin: 10,
+    height: 250,
     width: 350,
     backgroundColor: colors.black,
     borderRadius: 20,

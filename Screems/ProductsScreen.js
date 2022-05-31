@@ -42,12 +42,12 @@ const ProductsScreen = ({ navigation, route }) => {
           <Searcher input={input} setInput={setInput} />
           <ItemFound item={filter} />
           <View>
+            <GoBack onPress={handleBack} />
             <List
               data={filter}
               itemType={"product"}
               onPress={handleDetailProduct}
             />
-            <GoBack onPress={handleBack} />
           </View>
         </>
       </TouchableWithoutFeedback>
