@@ -6,27 +6,32 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import { PRODUCTSSELECTED } from "../Data/productsSelected";
 import { colors } from "../Styles/colors";
 import CartItem from "../Components/CartItem";
+import { useDispatch, useSelector } from "react-redux";
+import { confirmPurchase } from "../features/cart";
 
 const handleDelete = (id) =>
   console.log(`Se elimina del carrito el producto con id: ${id}`);
-
-const handleConfirm = () => console.log("Se confirma la compra");
 
 const renderItem = (data) => (
   <CartItem item={data.item} onDelete={handleDelete} />
 );
 
 const CartScreen = () => {
-  const total = 12000;
+  const { cart } = useSelector((state) => state.cart.value);
+  const { total } = useSelector((state) => state.cart.value);
+  const dispatch = useDispatch();
+
+  const handleConfirm = () => {
+    dispatch(confirmPurchase(cart));
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.list}>
         <FlatList
-          data={PRODUCTSSELECTED}
+          data={cart}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
         />

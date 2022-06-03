@@ -1,12 +1,19 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import GoBack from "../Components/GoBack";
 import { colors } from "../Styles/colors";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "../features/cart";
 
 const DetailScreen = ({ route, navigation }) => {
   const { productSelected: product } = useSelector(
     (state) => state.products.value
   );
+
+  const dispatch = useDispatch();
+
+  const handleAdd = (id) => {
+    dispatch(addItem({ id }));
+  };
 
   const handleBack = () => {
     navigation.goBack();
@@ -25,7 +32,8 @@ const DetailScreen = ({ route, navigation }) => {
             <Text style={styles.priceText}>$ {product.price}</Text>
           </View>
         </View>
-        <GoBack onPress={handleBack} />
+        <GoBack title={"Go back"} onPress={handleBack} />
+        <GoBack title={"Add"} onPress={() => handleAdd(product.id)} />
       </View>
     )
   );

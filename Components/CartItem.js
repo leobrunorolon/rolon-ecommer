@@ -8,7 +8,7 @@ const CartItem = ({ item, onDelete }) => {
   return (
     <View style={styles.item}>
       <View>
-        <Text style={styles.header}>{item.description}</Text>
+        <Text style={styles.header}>{item.title}</Text>
       </View>
       <View style={styles.detail}>
         <View>

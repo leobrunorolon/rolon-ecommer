@@ -42,7 +42,7 @@ const ProductsScreen = ({ navigation, route }) => {
           <Searcher input={input} setInput={setInput} />
           <ItemFound item={filter} />
           <View>
-            <GoBack onPress={handleBack} />
+            <GoBack title={"Go back"} onPress={handleBack} />
             <List
               data={filter}
               itemType={"product"}
