@@ -1,8 +1,4 @@
-import {
-  createAsyncThunk,
-  createSlice,
-  isRejectedWithValue,
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { PRODUCTS } from "../../Data/products";
 import { DB_URL } from "../../Constants/firebase";
 const initialState = {
@@ -55,6 +51,7 @@ export const cartSlice = createSlice({
         state.value.cart.push({ ...product, quantity: 1 });
         // state.value.total.push(item.quantity * item.price);
       }
+      console.log(state.value.cart);
     },
     removeItem: () => {},
   },
