@@ -15,13 +15,6 @@ const LoginScreen = () => {
   const dispatch = useDispatch();
 
   const handleSignup = () => {
-    /* const validateEmail = schemaEmail.validate({ email: email })
-        const validatePassword = schemaPassword.validate({ password: password })
-        console.log(validateEmail);
-        console.log(validatePassword)
-        if (validateEmail.error) setEmailError(validateEmail.error.message)
-        else if (validatePassword.error) setPasswordError(validatePassword.error.message)
-        else { */
     setEmailError("");
     setPasswordError("");
     if (password === confirmPassword) {
@@ -31,8 +24,6 @@ const LoginScreen = () => {
       setConfirmPasswordError("Los passwords deben coincidir");
     }
   };
-
-  // }
 
   const handleLogin = () => {
     const validateEmailAndPassword = loginValidationSchema.validate({
