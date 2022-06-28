@@ -2,16 +2,12 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { colors } from "../Styles/colors";
 
-const formatDay = (time) => {
-  const date = new Date(time);
-  return date.toLocaleDateString();
-};
-
 const OrderItem = ({ item }) => {
   return (
     <View style={styles.order}>
       <View>
-        <Text style={styles.date}>{formatDay(item.date)}</Text>
+        <Text style={styles.tracker}>Gestion: {item.id}</Text>
+        <Text style={styles.date}>{item.date}</Text>
         <Text style={styles.total}>${item.total}</Text>
       </View>
     </View>
@@ -35,6 +31,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   total: {
+    fontSize: 18,
+  },
+  tracker: {
+    textAlign: "center",
     fontSize: 18,
   },
 });

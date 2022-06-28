@@ -14,15 +14,19 @@ const initialState = {
 export const confirmPurchase = createAsyncThunk(
   "cart/confirm",
   async (items, asyncThunk) => {
+    console.log(asyncThunk.getState());
     try {
       const res = await fetch(`${DB_URL}orders.json`, {
         method: "POST",
         body: JSON.stringify({
+          id: Date.now(),
           date: new Date().toLocaleDateString(),
-          items: items,
+          user: items.user,
+          item: items.cart,
+          total: items.total,
         }),
       });
-      const data = res.json();
+      const data = await res.json();
       return data;
     } catch (error) {
       return rejectWithValue("Error");
@@ -49,11 +53,21 @@ export const cartSlice = createSlice({
         );
 
         state.value.cart.push({ ...product, quantity: 1 });
-        // state.value.total.push(item.quantity * item.price);
       }
-      console.log(state.value.cart);
     },
-    removeItem: () => {},
+    removeItem: (state, action) => {
+      const productDelet = state.value.cart.filter(
+        (product) => product.id !== action.payload
+      );
+      state.value.cart = productDelet;
+    },
+    totalItem: (state) => {
+      let total = 0;
+      state.value.cart.forEach((item) => {
+        total += item.quantity * item.price;
+      });
+      state.value.total = total.toFixed(2);
+    },
   },
   extraReducers: {
     [confirmPurchase.pending]: (state) => {
@@ -70,6 +84,6 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addItem, removeItem } = cartSlice.actions;
+export const { addItem, removeItem, totalItem } = cartSlice.actions;
 
 export default cartSlice.reducer;
