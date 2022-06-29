@@ -20,6 +20,9 @@ const OrdersScreen = () => {
 
   return (
     <View style={styles.container}>
+      {orders.legth === 0 && (
+        <Text style={styles.orders}>No hay ordenes aun...</Text>
+      )}
       <FlatList
         data={orders}
         keyExtractor={(item) => item.id}
@@ -34,5 +37,10 @@ export default OrdersScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  orders: {
+    textAlign: "center",
+    marginTop: 180,
+    fontSize: 16,
   },
 });

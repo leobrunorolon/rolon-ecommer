@@ -21,11 +21,8 @@ export const addLocationDb = createAsyncThunk(
         location.picture,
         location.address
       );
-      console.log("Add location db result:");
-      console.log(result.insertId);
       return `Record succesfully row with id: ${result.insertId}`;
     } catch (error) {
-      console.log(error.message);
       return asyncThunk.rejectWithValue("Error at writing address on db");
     }
   }
@@ -36,8 +33,6 @@ export const getLocations = createAsyncThunk(
   async (_, asyncThunk) => {
     try {
       const result = await fetchAddress();
-      console.log("Resultado al traer los datos de la DB en el thunk");
-      console.log(result);
       const data = result.rows._array;
       return data;
     } catch (error) {
@@ -51,11 +46,8 @@ export const removeLocationDb = createAsyncThunk(
   async (location, asyncThunk) => {
     try {
       const result = await deleteAddress(location.id);
-      console.log("Remove location db result:");
-      console.log(result);
       return `Item with id: ${location.id} removed successfully`;
     } catch (error) {
-      console.log(error.message);
       return asyncThunk.rejectWithValue(
         `Error at remove item with id: ${location.id}`
       );

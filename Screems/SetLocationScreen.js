@@ -25,7 +25,6 @@ const SetLocationScreen = ({ navigation }) => {
       }
       let location = await Location.getCurrentPositionAsync({});
 
-      // console.log(location);
       setInitialLocation({
         ...initialLocation,
         latitude: location.coords.latitude,
@@ -58,16 +57,10 @@ const SetLocationScreen = ({ navigation }) => {
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${API_KEY}`
       );
       const reverseGeocode = await response.json();
-      console.log(reverseGeocode);
       const address = reverseGeocode.results[0].formatted_address;
       navigation.navigate("Save-location", { address });
     })();
   };
-
-  console.log(initialLocation);
-
-  console.log(errorMsg);
-  console.log(location);
 
   return (
     // <View>

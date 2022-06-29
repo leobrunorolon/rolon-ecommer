@@ -20,7 +20,6 @@ const LocationStack = () => {
         },
         headerTintColor: "white",
         headerTitleStyle: {
-          fontFamily: "Koulen",
           fontSize: 28,
         },
         headerTitleAlign: "center",

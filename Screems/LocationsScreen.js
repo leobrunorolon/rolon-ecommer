@@ -25,8 +25,6 @@ const LocationsScreen = () => {
 
   const { locations } = useSelector((state) => state.locations.value);
 
-  console.log(locations);
-
   return (
     <View style={{ flex: 1 }}>
       <FlatList

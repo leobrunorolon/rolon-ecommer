@@ -14,8 +14,6 @@ const useFetch = (url) => {
           throw Error("No es posible conectarse con el servidor");
         }
         setData(data);
-        console.log(data);
-        console.log(data);
       } catch (err) {
         setError(err.message);
       } finally {

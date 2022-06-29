@@ -11,12 +11,7 @@ import CartItem from "../Components/CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { confirmPurchase, totalItem } from "../features/cart";
 
-const handleDelete = (id) =>
-  console.log(`Se elimina del carrito el producto con id: ${id}`);
-
-const renderItem = (data) => (
-  <CartItem item={data.item} onDelete={handleDelete} />
-);
+const renderItem = (data) => <CartItem item={data.item} />;
 
 const CartScreen = () => {
   const dispatch = useDispatch();

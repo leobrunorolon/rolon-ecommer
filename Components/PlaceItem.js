@@ -16,7 +16,6 @@ const PlaceItem = ({ onSelect, title, image, address, id }) => {
   const dispatch = useDispatch();
 
   const onRemove = (id) => {
-    console.log(id);
     dispatch(removeLocationDb({ id }));
     dispatch(removeLocation({ id }));
   };
