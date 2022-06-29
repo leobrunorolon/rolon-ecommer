@@ -12,7 +12,6 @@ const initialState = {
 export const getOrders = createAsyncThunk(
   "orders/getOrders",
   async (user, asyncThunk) => {
-    console.log(asyncThunk.getState());
     try {
       const res = await fetch(`${DB_URL}orders.json`);
       const data = Object.values(await res.json());

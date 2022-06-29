@@ -14,7 +14,6 @@ const initialState = {
 export const confirmPurchase = createAsyncThunk(
   "cart/confirm",
   async (items, asyncThunk) => {
-    console.log(asyncThunk.getState());
     try {
       const res = await fetch(`${DB_URL}orders.json`, {
         method: "POST",

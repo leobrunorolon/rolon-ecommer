@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import OrderItem from "../Components/OrderItem";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrders } from "../features/orders";
+import EmptyItem from "../Components/EmptyItem";
 
 const renderItem = ({ item }) => <OrderItem item={item} />;
 
@@ -20,9 +21,7 @@ const OrdersScreen = () => {
 
   return (
     <View style={styles.container}>
-      {orders.legth === 0 && (
-        <Text style={styles.orders}>No hay ordenes aun...</Text>
-      )}
+      {orders.length === 0 && <EmptyItem />}
       <FlatList
         data={orders}
         keyExtractor={(item) => item.id}
@@ -37,10 +36,5 @@ export default OrdersScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  orders: {
-    textAlign: "center",
-    marginTop: 180,
-    fontSize: 16,
   },
 });

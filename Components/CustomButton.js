@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { colors } from "../Styles/colors";
 
-const GoBack = ({ title, onPress }) => {
+const CustomButton = ({ title, onPress }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={onPress}>
@@ -12,7 +12,7 @@ const GoBack = ({ title, onPress }) => {
   );
 };
 
-export default GoBack;
+export default CustomButton;
 
 const styles = StyleSheet.create({
   container: {

@@ -10,6 +10,7 @@ import { colors } from "../Styles/colors";
 import CartItem from "../Components/CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { confirmPurchase, totalItem } from "../features/cart";
+import EmptyItem from "../Components/EmptyItem";
 
 const renderItem = (data) => <CartItem item={data.item} />;
 
@@ -41,6 +42,7 @@ const CartScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.list}>
+        {cart.length == 0 && <EmptyItem />}
         <FlatList
           data={cart}
           keyExtractor={(item) => item.id}
