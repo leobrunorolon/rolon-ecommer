@@ -5,8 +5,8 @@ import { colors } from "../../../Styles/colors";
 import { Ionicons } from "@expo/vector-icons";
 import LocationsScreen from "../../../Screems/LocationsScreen";
 import SaveLocationScreen from "../../../Screems/SaveLocationScreen";
-// import GetLocationScreen from "../../../Screens/GetLocationScreen";
-// import SetLocationScreen from "../../../Screens/SetLocationScreen";
+import GetLocationScreen from "../../../Screems/GetLocationScreen";
+import SetLocationScreen from "../../../Screems/SetLocationScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,9 +16,9 @@ const LocationStack = () => {
       initialRouteName=""
       screenOptions={{
         headerStyle: {
-          backgroundColor: colors.darkBlue,
+          backgroundColor: colors.mint,
         },
-        headerTintColor: "white",
+        headerTintColor: colors.white,
         headerTitleStyle: {
           fontSize: 28,
         },
@@ -39,7 +39,11 @@ const LocationStack = () => {
               <TouchableOpacity
                 onPress={() => navigation.navigate("Save-location")}
               >
-                <Ionicons name="add-circle-outline" size={24} color="black" />
+                <Ionicons
+                  name="add-circle-outline"
+                  size={30}
+                  color={colors.black}
+                />
               </TouchableOpacity>
             );
           },
@@ -54,7 +58,7 @@ const LocationStack = () => {
         }}
       />
 
-      {/* <Stack.Screen
+      <Stack.Screen
         name="Get-location"
         component={GetLocationScreen}
         options={{
@@ -68,7 +72,7 @@ const LocationStack = () => {
         options={{
           title: "Definir una ubicación",
         }}
-      /> */}
+      />
     </Stack.Navigator>
   );
 };

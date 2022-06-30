@@ -1,8 +1,9 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React, { useLayoutEffect, useState, useEffect } from "react";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
-import { API_KEY } from "../Constants/googleAPI";
+import { API_KEY_G } from "@env";
+import CustomButton from "../Components/CustomButton";
 
 const SetLocationScreen = ({ navigation }) => {
   const [initialLocation, setInitialLocation] = useState({
@@ -54,7 +55,7 @@ const SetLocationScreen = ({ navigation }) => {
     //Reverse geocode
     (async () => {
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${API_KEY}`
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${API_KEY_G}`
       );
       const reverseGeocode = await response.json();
       const address = reverseGeocode.results[0].formatted_address;
@@ -74,7 +75,7 @@ const SetLocationScreen = ({ navigation }) => {
               showsScale={true}
               onPress={handleLocation}
               initialRegion={initialLocation}
-              style={{ flex: 1 }}
+              style={styles.map}
             >
               {location?.lat ? (
                 <Marker
@@ -87,7 +88,10 @@ const SetLocationScreen = ({ navigation }) => {
               ) : null}
             </MapView>
           )}
-          <Button title="Confirmar ubicación" onPress={handleConfirm}></Button>
+          <CustomButton
+            title="Confirmar ubicación"
+            onPress={handleConfirm}
+          ></CustomButton>
         </>
       )}
       {/* </View> */}
@@ -97,4 +101,10 @@ const SetLocationScreen = ({ navigation }) => {
 
 export default SetLocationScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  map: {
+    height: 450,
+    width: 450,
+    marginBottom: 20,
+  },
+});

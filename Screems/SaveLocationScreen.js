@@ -1,10 +1,10 @@
-import { Button, Image, StyleSheet, Text, TextInput, View } from "react-native";
+import { Image, StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useState } from "react";
 import { colors } from "../Styles/colors";
 import * as ImagePicker from "expo-image-picker";
-import renamePathAndMove from "../Utils/renamePath";
 import { useDispatch } from "react-redux";
 import { addLocation, addLocationDb } from "../features/locations";
+import CustomButton from "../Components/CustomButton";
 
 const SaveLocationScreen = ({ navigation, route }) => {
   const [title, setTitle] = useState("");
@@ -61,26 +61,34 @@ const SaveLocationScreen = ({ navigation, route }) => {
     setPicture("");
   };
 
-  // const handleSetLocation = () => {
-  //   navigation.navigate("Set-location");
-  // };
+  const handleSetLocation = () => {
+    navigation.navigate("Set-location");
+  };
 
-  // const handleLocation = () => {
-  //   navigation.navigate("Get-location");
-  // };
+  const handleLocation = () => {
+    navigation.navigate("Get-location");
+  };
 
   return (
     <View style={styles.container}>
-      <Text>Nueva dirección</Text>
-      <TextInput value={title} onChangeText={setTitle} placeholder="Título" />
+      <Text style={styles.text}>Titulo de la dirección</Text>
+      <TextInput
+        style={styles.input}
+        value={title}
+        onChangeText={setTitle}
+        placeholder="Titulo"
+      />
       {picture ? (
         <Image source={{ uri: picture }} style={styles.image} />
       ) : null}
-      <Button title="Tomar una foto" onPress={handleTakePicture} />
-      <Button title="Seleccionar de la galería" onPress={handlePickLibrary} />
-      {/* <Button title="Obtener ubicación" onPress={handleLocation} />
-      <Button title="Definir una ubicación" onPress={handleSetLocation} /> */}
-      <Button title="Confirmar" onPress={handleConfirm}></Button>
+      <CustomButton title="Tomar una foto" onPress={handleTakePicture} />
+      <CustomButton
+        title="Seleccionar de la galería"
+        onPress={handlePickLibrary}
+      />
+      <CustomButton title="Obtener ubicación" onPress={handleLocation} />
+      <CustomButton title="Definir una ubicación" onPress={handleSetLocation} />
+      <CustomButton title="Confirmar" onPress={handleConfirm}></CustomButton>
     </View>
   );
 };
@@ -93,7 +101,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     padding: 10,
-    backgroundColor: colors.black,
+    backgroundColor: colors.blue,
   },
   image: {
     width: "90%",
@@ -101,5 +109,18 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 8,
     borderColor: colors.black,
+  },
+  text: {
+    color: colors.white,
+    fontFamily: "RobotoMono",
+    fontSize: 26,
+  },
+  input: {
+    backgroundColor: colors.white,
+    width: 150,
+    padding: 5,
+    textAlign: "center",
+    borderRadius: 10,
+    margin: 10,
   },
 });
