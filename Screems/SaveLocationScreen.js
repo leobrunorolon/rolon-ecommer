@@ -1,18 +1,16 @@
-import { Button, Image, StyleSheet, Text, TextInput, View } from "react-native";
-import React from "react";
+import { Image, StyleSheet, Text, TextInput, View } from "react-native";
+import React, { useState } from "react";
 import { colors } from "../Styles/colors";
 import * as ImagePicker from "expo-image-picker";
-import renamePathAndMove from "../Utils/renamePath";
 import { useDispatch } from "react-redux";
-import { addLocation } from "../features/locations";
+import { addLocation, addLocationDb } from "../features/locations";
+import CustomButton from "../Components/CustomButton";
 
 const SaveLocationScreen = ({ navigation, route }) => {
-  const [title, setTitle] = React.useState("");
-  const [picture, setPicture] = React.useState("");
+  const [title, setTitle] = useState("");
+  const [picture, setPicture] = useState("");
 
   const params = route.params;
-
-  console.log(params?.address);
 
   const dispatch = useDispatch();
 
@@ -25,8 +23,6 @@ const SaveLocationScreen = ({ navigation, route }) => {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.cancelled) {
       setPicture(result.uri);
     }
@@ -35,11 +31,10 @@ const SaveLocationScreen = ({ navigation, route }) => {
   const getPermission = async () => {
     const { status } = await ImagePicker.getCameraPermissionsAsync();
 
-    console.log(status);
-    if (status !== "granted") {
-      return false;
+    if (status === "granted") {
+      return true;
     }
-    return true;
+    return false;
   };
 
   const handleTakePicture = async () => {
@@ -54,16 +49,13 @@ const SaveLocationScreen = ({ navigation, route }) => {
       quality: 1,
     });
 
-    console.log(image);
     setPicture(image.uri);
   };
 
   const handleConfirm = async () => {
-    // const path = await renamePathAndMove(picture);
-    // console.log(path);
-    dispatch(
-      addLocation({ title, picture, id: Date.now(), address: params?.address })
-    );
+    let id = Date.now();
+    dispatch(addLocation({ title, picture, id, address: params?.address }));
+    dispatch(addLocationDb({ title, picture, id, address: params?.address }));
     setTitle("");
     setPicture("");
   };
@@ -78,16 +70,24 @@ const SaveLocationScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <Text>Nueva dirección</Text>
-      <TextInput value={title} onChangeText={setTitle} placeholder="Título" />
+      <Text style={styles.text}>Titulo de la dirección</Text>
+      <TextInput
+        style={styles.input}
+        value={title}
+        onChangeText={setTitle}
+        placeholder="Titulo"
+      />
       {picture ? (
         <Image source={{ uri: picture }} style={styles.image} />
       ) : null}
-      <Button title="Tomar una foto" onPress={handleTakePicture} />
-      <Button title="Seleccionar de la galería" onPress={handlePickLibrary} />
-      <Button title="Obtener ubicación" onPress={handleLocation} />
-      <Button title="Definir una ubicación" onPress={handleSetLocation} />
-      <Button title="Confirmar" onPress={handleConfirm}></Button>
+      <CustomButton title="Tomar una foto" onPress={handleTakePicture} />
+      <CustomButton
+        title="Seleccionar de la galería"
+        onPress={handlePickLibrary}
+      />
+      <CustomButton title="Obtener ubicación" onPress={handleLocation} />
+      <CustomButton title="Definir una ubicación" onPress={handleSetLocation} />
+      <CustomButton title="Confirmar" onPress={handleConfirm}></CustomButton>
     </View>
   );
 };
@@ -100,13 +100,26 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     padding: 10,
-    backgroundColor: colors.beige,
+    backgroundColor: colors.blue,
   },
   image: {
     width: "90%",
     height: 200,
     borderWidth: 2,
     borderRadius: 8,
-    borderColor: colors.lightBlue,
+    borderColor: colors.black,
+  },
+  text: {
+    color: colors.white,
+    fontFamily: "RobotoMono",
+    fontSize: 26,
+  },
+  input: {
+    backgroundColor: colors.white,
+    width: 150,
+    padding: 5,
+    textAlign: "center",
+    borderRadius: 10,
+    margin: 10,
   },
 });

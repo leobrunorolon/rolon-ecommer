@@ -5,31 +5,44 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { colors } from "../Styles/colors";
 import CartItem from "../Components/CartItem";
 import { useDispatch, useSelector } from "react-redux";
-import { confirmPurchase } from "../features/cart";
+import { confirmPurchase, totalItem } from "../features/cart";
+import EmptyItem from "../Components/EmptyItem";
 
-const handleDelete = (id) =>
-  console.log(`Se elimina del carrito el producto con id: ${id}`);
-
-const renderItem = (data) => (
-  <CartItem item={data.item} onDelete={handleDelete} />
-);
+const renderItem = (data) => <CartItem item={data.item} />;
 
 const CartScreen = () => {
+  const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cart.value);
   const { total } = useSelector((state) => state.cart.value);
-  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth.value);
+  // const userPrueba = {
+  //   email: "prueba@gmail.com",
+  //   token: "12345",
+  //   userId: "prueba",
+  // };
 
-  const handleConfirm = () => {
-    dispatch(confirmPurchase(cart));
+  useEffect(() => {
+    dispatch(totalItem());
+  }, [cart]);
+
+  const handleConfirm = async () => {
+    const items = {
+      total: await total,
+      cart: await cart,
+      user: await user,
+    };
+    const totalOrder = await total;
+    dispatch(confirmPurchase(items));
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.list}>
+        {cart.length == 0 && <EmptyItem />}
         <FlatList
           data={cart}
           keyExtractor={(item) => item.id}

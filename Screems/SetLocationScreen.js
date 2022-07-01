@@ -1,19 +1,38 @@
-import { Button, StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import React, { useLayoutEffect, useState, useEffect } from "react";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
-import { API_KEY } from "../Constants/googleAPI";
+import { API_KEY_G } from "@env";
+import CustomButton from "../Components/CustomButton";
 
 const SetLocationScreen = ({ navigation }) => {
+  const [initialLocation, setInitialLocation] = useState({
+    latitude: 0,
+    longitude: 0,
+    latitudeDelta: 0.09,
+    longitudeDelta: 0.04,
+  });
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
-  const initialRegion = {
-    latitude: 37,
-    longitude: -122,
-    latitudeDelta: 0.09,
-    longitudeDelta: 0.04,
-  };
+  //Efecto para traer la ubicación apenas renderiza
+  useLayoutEffect(() => {
+    //IIFE
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+      let location = await Location.getCurrentPositionAsync({});
+
+      setInitialLocation({
+        ...initialLocation,
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
+    })();
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -36,17 +55,13 @@ const SetLocationScreen = ({ navigation }) => {
     //Reverse geocode
     (async () => {
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${API_KEY}`
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${API_KEY_G}`
       );
       const reverseGeocode = await response.json();
-      console.log(reverseGeocode);
       const address = reverseGeocode.results[0].formatted_address;
       navigation.navigate("Save-location", { address });
     })();
   };
-
-  console.log(errorMsg);
-  console.log(location);
 
   return (
     // <View>
@@ -55,22 +70,28 @@ const SetLocationScreen = ({ navigation }) => {
         <Text>{errorMsg}</Text>
       ) : (
         <>
-          <MapView
-            onPress={handleLocation}
-            initialRegion={initialRegion}
-            style={{ flex: 1 }}
-          >
-            {location?.lat ? (
-              <Marker
-                title="Ubicación seleccionada"
-                coordinate={{
-                  latitude: location.lat,
-                  longitude: location.lng,
-                }}
-              />
-            ) : null}
-          </MapView>
-          <Button title="Confirmar ubicación" onPress={handleConfirm}></Button>
+          {initialLocation.latitude !== 0 && (
+            <MapView
+              showsScale={true}
+              onPress={handleLocation}
+              initialRegion={initialLocation}
+              style={styles.map}
+            >
+              {location?.lat ? (
+                <Marker
+                  title="Ubicación seleccionada"
+                  coordinate={{
+                    latitude: location.lat,
+                    longitude: location.lng,
+                  }}
+                />
+              ) : null}
+            </MapView>
+          )}
+          <CustomButton
+            title="Confirmar ubicación"
+            onPress={handleConfirm}
+          ></CustomButton>
         </>
       )}
       {/* </View> */}
@@ -80,4 +101,10 @@ const SetLocationScreen = ({ navigation }) => {
 
 export default SetLocationScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  map: {
+    height: 450,
+    width: 450,
+    marginBottom: 20,
+  },
+});

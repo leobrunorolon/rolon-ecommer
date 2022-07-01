@@ -11,10 +11,8 @@ export const AdProvider = ({ children }) => {
   const handleSelected = (type, data) => {
     if (type === "category") {
       setCategory(data);
-      console.log(category);
     } else if (type === "product") {
       setProduct(data);
-      console.log(product);
     } else {
       setCategory(data);
       setProduct(data);

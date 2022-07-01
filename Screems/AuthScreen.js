@@ -18,7 +18,6 @@ const LoginScreen = () => {
     setEmailError("");
     setPasswordError("");
     if (password === confirmPassword) {
-      console.log("Se registra!");
       dispatch(signUp({ email: email, password: password }));
     } else {
       setConfirmPasswordError("Los passwords deben coincidir");
@@ -34,17 +33,13 @@ const LoginScreen = () => {
   };
 
   const handleSubmit = (values) => {
-    console.log(values);
-    console.log("Se submiteo un form válido");
     if (registroVista) {
       if (values.password === values.confirmPassword) {
-        console.log("Se registra!");
         dispatch(signUp({ email: values.email, password: values.password }));
       } else {
         setConfirmPasswordError("Los passwords deben coincidir");
       }
     } else {
-      console.log("Entra al login");
       dispatch(login({ email: values.email, password: values.password }));
     }
   };

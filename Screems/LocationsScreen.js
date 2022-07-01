@@ -1,7 +1,8 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import PlaceItem from "../Components/PlaceItem";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getLocations, removeLocationDb } from "../features/locations";
 
 const renderItem = ({ item }) => {
   return (
@@ -10,14 +11,19 @@ const renderItem = ({ item }) => {
       title={item.title}
       image={item.picture}
       address={item.address}
+      id={item.id}
     />
   );
 };
 
 const LocationsScreen = () => {
-  const { locations } = useSelector((state) => state.locations.value);
+  const dispatch = useDispatch();
 
-  console.log(locations);
+  useEffect(() => {
+    dispatch(getLocations());
+  }, []);
+
+  const { locations } = useSelector((state) => state.locations.value);
 
   return (
     <View style={{ flex: 1 }}>

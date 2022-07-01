@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image } from "react-native";
-import GoBack from "../Components/GoBack";
+import CustomButton from "../Components/CustomButton";
 import { colors } from "../Styles/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../features/cart";
@@ -29,11 +29,11 @@ const DetailScreen = ({ route, navigation }) => {
           />
           <View style={styles.description}>
             <Text style={styles.descriptionText}>{product.description}</Text>
-            <Text style={styles.priceText}>$ {product.price}</Text>
+            <Text style={styles.priceText}>$ {product.price.toFixed(2)}</Text>
           </View>
         </View>
-        <GoBack title={"Go back"} onPress={handleBack} />
-        <GoBack title={"Add"} onPress={() => handleAdd(product.id)} />
+        <CustomButton title={"Go back"} onPress={handleBack} />
+        <CustomButton title={"Add"} onPress={() => handleAdd(product.id)} />
       </View>
     )
   );
@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
   },
   description: {
     margin: 10,
-    height: 250,
-    width: 350,
+    height: 200,
+    width: 360,
     backgroundColor: colors.black,
     borderRadius: 20,
     padding: 30,

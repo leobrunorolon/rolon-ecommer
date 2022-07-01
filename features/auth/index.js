@@ -26,7 +26,6 @@ export const signUp = createAsyncThunk(
         }),
       });
       const data = await res.json();
-      console.log(data);
       return data;
     } catch (error) {
       return rejectWithValue("Opps there seems to be an error");
@@ -37,7 +36,6 @@ export const signUp = createAsyncThunk(
 export const login = createAsyncThunk(
   "auth/login",
   async (emailAndPassword, asyncThunk) => {
-    console.log(emailAndPassword);
     try {
       const res = await fetch(`${AUTH_LOGIN}`, {
         method: "POST",
@@ -48,7 +46,6 @@ export const login = createAsyncThunk(
         }),
       });
       const data = await res.json();
-      console.log(data);
       return data;
     } catch (error) {
       return rejectWithValue("Opps there seems to be an error");
@@ -69,7 +66,6 @@ export const authSlice = createSlice({
       state.value.loading = true;
     },
     [signUp.fulfilled]: (state, { payload }) => {
-      console.log(payload);
       if (payload.error) {
         state.value.error = payload.error.message;
       }

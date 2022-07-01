@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import Searcher from "../Components/Searcher";
-import GoBack from "../Components/GoBack";
+import CustomButton from "../Components/CustomButton";
 import List from "../Components/List";
 import { useDispatch, useSelector } from "react-redux";
 import useFilter from "../Hooks/useFilter";
@@ -42,7 +42,7 @@ const ProductsScreen = ({ navigation, route }) => {
           <Searcher input={input} setInput={setInput} />
           <ItemFound item={filter} />
           <View>
-            <GoBack title={"Go back"} onPress={handleBack} />
+            <CustomButton title={"Go back"} onPress={handleBack} />
             <List
               data={filter}
               itemType={"product"}

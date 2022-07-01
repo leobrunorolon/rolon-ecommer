@@ -1,10 +1,15 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-
+import { removeItem } from "../features/cart";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../Styles/colors";
+import { useDispatch } from "react-redux";
 
-const CartItem = ({ item, onDelete }) => {
+const CartItem = ({ item }) => {
+  const dispatch = useDispatch();
+  const onDelete = () => {
+    dispatch(removeItem(item.id));
+  };
   return (
     <View style={styles.item}>
       <View>
@@ -13,9 +18,9 @@ const CartItem = ({ item, onDelete }) => {
       <View style={styles.detail}>
         <View>
           <Text style={styles.text}>Cantidad: {item.quantity}</Text>
-          <Text style={styles.text}>${item.price}</Text>
+          <Text style={styles.text}>${item.price.toFixed(2)}</Text>
         </View>
-        <TouchableOpacity onPress={() => onDelete(item.id)}>
+        <TouchableOpacity onPress={onDelete}>
           <Ionicons name="trash" size={24}></Ionicons>
         </TouchableOpacity>
       </View>

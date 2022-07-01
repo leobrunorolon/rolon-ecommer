@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import TabNavigatorLogged from "./Tabs/UserLogged";
 import { SafeAreaView } from "react-native-safe-area-context";

@@ -8,6 +8,17 @@ import MainNavigator from "./Navigation";
 import store from "./Store";
 import { useFonts } from "expo-font";
 import { ActivityIndicator } from "react-native";
+import { init } from "./db";
+
+// Inicializacion de sqlite
+init()
+  .then(() => {
+    console.log("Db initialized");
+  })
+  .catch((err) => {
+    console.log("Error loading db");
+    console.log(err.message);
+  });
 
 const App = () => {
   const [loaded] = useFonts({

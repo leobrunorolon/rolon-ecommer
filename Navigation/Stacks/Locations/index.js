@@ -1,13 +1,12 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import CartScreen from "../../../Screens/CartScreen";
 import { colors } from "../../../Styles/colors";
-import LocationsScreen from "../../../Screens/LocationsScreen";
-import SaveLocationScreen from "../../../Screens/SaveLocationScreen";
 import { Ionicons } from "@expo/vector-icons";
-import GetLocationScreen from "../../../Screens/GetLocationScreen";
-import SetLocationScreen from "../../../Screens/SetLocationScreen";
+import LocationsScreen from "../../../Screems/LocationsScreen";
+import SaveLocationScreen from "../../../Screems/SaveLocationScreen";
+import GetLocationScreen from "../../../Screems/GetLocationScreen";
+import SetLocationScreen from "../../../Screems/SetLocationScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,11 +16,10 @@ const LocationStack = () => {
       initialRouteName=""
       screenOptions={{
         headerStyle: {
-          backgroundColor: colors.darkBlue,
+          backgroundColor: colors.mint,
         },
-        headerTintColor: "white",
+        headerTintColor: colors.white,
         headerTitleStyle: {
-          fontFamily: "Koulen",
           fontSize: 28,
         },
         headerTitleAlign: "center",
@@ -41,7 +39,11 @@ const LocationStack = () => {
               <TouchableOpacity
                 onPress={() => navigation.navigate("Save-location")}
               >
-                <Ionicons name="add-circle-outline" size={24} color="black" />
+                <Ionicons
+                  name="add-circle-outline"
+                  size={30}
+                  color={colors.black}
+                />
               </TouchableOpacity>
             );
           },

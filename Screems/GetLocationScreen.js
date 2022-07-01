@@ -1,7 +1,8 @@
-import { Image, StyleSheet, Text, View, Button } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import * as Location from "expo-location";
-import { API_KEY } from "../Constants/googleAPI";
+import { API_KEY_G } from "@env";
+import CustomButton from "../Components/CustomButton";
 
 //https://developers.google.com/maps/documentation/maps-static/start DOC API
 //https://developers.google.com/maps/documentation/maps-static/start#Markers Markers DOC
@@ -16,18 +17,20 @@ const GetLocationScreen = ({ navigation }) => {
   useEffect(() => {
     //IIFE
     (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
+      try {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+          setErrorMsg("Permission to access location was denied");
+          return;
+        }
+        let location = await Location.getCurrentPositionAsync({});
+        setLocation({
+          lat: location.coords.latitude,
+          lng: location.coords.longitude,
+        });
+      } catch (error) {
+        console.log(error.message);
       }
-      let location = await Location.getCurrentPositionAsync({});
-
-      // console.log(location);
-      setLocation({
-        lat: location.coords.latitude,
-        lng: location.coords.longitude,
-      });
     })();
   }, []);
 
@@ -35,18 +38,15 @@ const GetLocationScreen = ({ navigation }) => {
   useEffect(() => {
     if (location?.lat) {
       (async () => {
-        console.log("Entro");
-        // console.log(location);
         //Seteamos la url de la foto
         setPhoto(
-          `https://maps.googleapis.com/maps/api/staticmap?center=${location.lat},${location.lng}&zoom=13&size=600x600&maptype=roadmap&markers=color:red%7Clabel:C%7C${location.lat},${location.lng}&key=${API_KEY}`
+          `https://maps.googleapis.com/maps/api/staticmap?center=${location.lat},${location.lng}&zoom=13&size=300x300&maptype=roadmap&markers=color:black%7Clabel:R%7C${location.lat},${location.lng}&key=${API_KEY_G}`
         );
         //Reverse geocode
         const response = await fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${API_KEY}`
+          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${API_KEY_G}`
         );
         const reverseGeocode = await response.json();
-        console.log(reverseGeocode);
         const address = reverseGeocode.results[0].formatted_address;
         setAddress(address);
       })();
@@ -59,8 +59,6 @@ const GetLocationScreen = ({ navigation }) => {
   } else if (location) {
     text = JSON.stringify(location);
   }
-
-  // console.log(photo);
   const handleConfirmLocation = () => {
     navigation.navigate("Save-location", { address });
   };
@@ -70,15 +68,15 @@ const GetLocationScreen = ({ navigation }) => {
       <Text style={styles.paragraph}>{text}</Text>
       <View>
         {photo ? (
-          <Image source={{ uri: photo }} style={{ width: 500, height: 500 }} />
+          <Image source={{ uri: photo }} style={{ width: 450, height: 450 }} />
         ) : null}
         {address ? (
           <>
             <Text>{address}</Text>
-            <Button
+            <CustomButton
               title="Confirmar dirección"
               onPress={handleConfirmLocation}
-            ></Button>
+            ></CustomButton>
           </>
         ) : null}
       </View>
