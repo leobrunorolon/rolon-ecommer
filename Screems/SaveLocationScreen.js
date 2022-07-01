@@ -53,7 +53,6 @@ const SaveLocationScreen = ({ navigation, route }) => {
   };
 
   const handleConfirm = async () => {
-    // const path = await renamePathAndMove(picture);
     let id = Date.now();
     dispatch(addLocation({ title, picture, id, address: params?.address }));
     dispatch(addLocationDb({ title, picture, id, address: params?.address }));

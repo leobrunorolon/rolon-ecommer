@@ -14,29 +14,40 @@ const PlaceItem = ({ onSelect, title, image, address, id }) => {
   };
 
   return (
-    <TouchableOpacity onPress={onSelect} style={styles.placeItem}>
-      <Image style={styles.image} source={{ uri: image }} />
-      <View style={styles.info}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.address}>{address}</Text>
-      </View>
-      <TouchableOpacity onPress={() => onRemove(id)}>
+    <View style={styles.container}>
+      <TouchableOpacity onPress={onSelect} style={styles.placeItem}>
+        <Image style={styles.image} source={{ uri: image }} />
+        <View style={styles.info}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.address}>{address}</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.remove} onPress={() => onRemove(id)}>
         <Entypo name="trash" size={24} color="black" />
       </TouchableOpacity>
-    </TouchableOpacity>
+    </View>
   );
 };
 
 export default PlaceItem;
 
 const styles = StyleSheet.create({
-  placeItem: {
+  container: {
+    flexDirection: "row",
+    alignContent: "center",
     borderBottomColor: "#ccc",
     borderBottomWidth: 1,
+  },
+  remove: {
+    width: "10%",
+    justifyContent: "center",
+  },
+  placeItem: {
     paddingVertical: 16,
     paddingHorizontal: 30,
     flexDirection: "row",
     alignItems: "center",
+    width: "90%",
   },
   image: {
     width: 70,
