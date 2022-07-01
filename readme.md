@@ -16,4 +16,4 @@ contraseña:123456
 
 Apk en carpeta
 
-va a ver futuras versiones
+va a ver futuras versiones.
