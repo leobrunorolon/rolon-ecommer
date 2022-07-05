@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import React, { useLayoutEffect, useState, useEffect } from "react";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
-import { API_KEY_G } from "@env";
 import CustomButton from "../Components/CustomButton";
+import { API_KEY_G } from "../Constants/config";
 
 const SetLocationScreen = ({ navigation }) => {
   const [initialLocation, setInitialLocation] = useState({
@@ -64,7 +64,6 @@ const SetLocationScreen = ({ navigation }) => {
   };
 
   return (
-    // <View>
     <>
       {errorMsg ? (
         <Text>{errorMsg}</Text>
@@ -94,7 +93,6 @@ const SetLocationScreen = ({ navigation }) => {
           ></CustomButton>
         </>
       )}
-      {/* </View> */}
     </>
   );
 };

@@ -10,6 +10,7 @@ const renderItem = ({ item }) => <OrderItem item={item} />;
 const OrdersScreen = () => {
   const { orders } = useSelector((state) => state.orders.value);
   const { user } = useSelector((state) => state.auth.value);
+  const { cart } = useSelector((state) => state.cart.value);
   const dispatch = useDispatch();
   // const userprueba = {
   //   email: "prueba@gmail.com",
@@ -17,7 +18,7 @@ const OrdersScreen = () => {
 
   useEffect(() => {
     dispatch(getOrders(user));
-  }, [renderItem]);
+  }, [cart]);
 
   return (
     <View style={styles.container}>

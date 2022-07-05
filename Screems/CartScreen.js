@@ -45,14 +45,15 @@ const CartScreen = () => {
       cart: await cart,
       user: await user,
     };
-    dispatch(confirmPurchase(items));
     setModalOpen(true);
-    if (items.total != 0)
+    if (items.total >= 1) {
       setDataOrder({
         id: items.id,
         date: items.date,
         total: items.total,
       });
+      dispatch(confirmPurchase(items));
+    }
   };
 
   const handleClose = () => {

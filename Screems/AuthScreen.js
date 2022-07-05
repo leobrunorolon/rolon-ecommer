@@ -29,7 +29,6 @@ const LoginScreen = () => {
       email,
       password,
     });
-    console.log(validateEmailAndPassword);
   };
 
   const handleSubmit = (values) => {

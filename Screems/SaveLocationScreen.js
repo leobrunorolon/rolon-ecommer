@@ -5,6 +5,9 @@ import * as ImagePicker from "expo-image-picker";
 import { useDispatch } from "react-redux";
 import { addLocation, addLocationDb } from "../features/locations";
 import CustomButton from "../Components/CustomButton";
+import { Entypo } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 const SaveLocationScreen = ({ navigation, route }) => {
   const [title, setTitle] = useState("");
@@ -77,17 +80,47 @@ const SaveLocationScreen = ({ navigation, route }) => {
         onChangeText={setTitle}
         placeholder="Titulo"
       />
+
       {picture ? (
-        <Image source={{ uri: picture }} style={styles.image} />
+        <View style={styles.imgContain}>
+          <Image source={{ uri: picture }} style={styles.image} />
+        </View>
+      ) : (
+        <View style={styles.imgContain}>
+          <Entypo name="image" size={40} color="black" />
+        </View>
+      )}
+      <View style={styles.boton}>
+        <CustomButton title="Tomar una foto" onPress={handleTakePicture} />
+        <CustomButton
+          title="Seleccionar de la galería"
+          onPress={handlePickLibrary}
+        />
+      </View>
+
+      {params ? (
+        <View style={styles.imgContain}>
+          <AntDesign name="checkcircle" size={40} color="green" />
+        </View>
+      ) : (
+        <View style={styles.imgContain}>
+          <FontAwesome name="map-marker" size={40} color="black" />
+        </View>
+      )}
+      <View style={styles.boton}>
+        <CustomButton title="Obtener ubicación" onPress={handleLocation} />
+        <CustomButton
+          title="Definir una ubicación"
+          onPress={handleSetLocation}
+        />
+      </View>
+      {title ? (
+        picture ? (
+          params ? (
+            <CustomButton title="Confirmar" onPress={handleConfirm} />
+          ) : null
+        ) : null
       ) : null}
-      <CustomButton title="Tomar una foto" onPress={handleTakePicture} />
-      <CustomButton
-        title="Seleccionar de la galería"
-        onPress={handlePickLibrary}
-      />
-      <CustomButton title="Obtener ubicación" onPress={handleLocation} />
-      <CustomButton title="Definir una ubicación" onPress={handleSetLocation} />
-      <CustomButton title="Confirmar" onPress={handleConfirm}></CustomButton>
     </View>
   );
 };
@@ -97,14 +130,25 @@ export default SaveLocationScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    height: "90%",
     flexDirection: "column",
     alignItems: "center",
     padding: 10,
     backgroundColor: colors.blue,
   },
+  imgContain: {
+    height: 150,
+    width: 150,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.white,
+    borderRadius: 20,
+    margin: 5,
+  },
   image: {
-    width: "90%",
-    height: 200,
+    resizeMode: "contain",
+    width: 150,
+    height: 150,
     borderWidth: 2,
     borderRadius: 8,
     borderColor: colors.black,
@@ -121,5 +165,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     borderRadius: 10,
     margin: 10,
+  },
+  boton: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });

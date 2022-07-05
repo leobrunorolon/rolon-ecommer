@@ -1,8 +1,9 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import * as Location from "expo-location";
-import { API_KEY_G } from "@env";
+
 import CustomButton from "../Components/CustomButton";
+import { API_KEY_G } from "../Constants/config";
 
 //https://developers.google.com/maps/documentation/maps-static/start DOC API
 //https://developers.google.com/maps/documentation/maps-static/start#Markers Markers DOC

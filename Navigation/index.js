@@ -7,10 +7,11 @@ import AuthStack from "./Stacks/Auth";
 
 const MainNavigator = () => {
   const { user } = useSelector((state) => state.auth.value);
+
   return (
     <NavigationContainer>
       <SafeAreaView style={{ flex: 1 }}>
-        {user.mail ? <TabNavigatorLogged /> : <AuthStack />}
+        {user.email ? <TabNavigatorLogged /> : <AuthStack />}
       </SafeAreaView>
     </NavigationContainer>
   );
