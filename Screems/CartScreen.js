@@ -9,8 +9,10 @@ import React, { useEffect, useState } from "react";
 import { colors } from "../Styles/colors";
 import CartItem from "../Components/CartItem";
 import { useDispatch, useSelector } from "react-redux";
-import { confirmPurchase, totalItem } from "../features/cart";
+import { cleanItem, confirmPurchase, totalItem } from "../features/cart";
 import EmptyItem from "../Components/EmptyItem";
+import { Modal } from "react-native";
+import CustomButton from "../Components/CustomButton";
 
 const renderItem = (data) => <CartItem item={data.item} />;
 
@@ -24,6 +26,12 @@ const CartScreen = () => {
   //   token: "12345",
   //   userId: "prueba",
   // };
+  const [modalOpen, setModalOpen] = useState(false);
+  const [dataOrder, setDataOrder] = useState({
+    id: null,
+    date: null,
+    total: 0,
+  });
 
   useEffect(() => {
     dispatch(totalItem());
@@ -31,14 +39,31 @@ const CartScreen = () => {
 
   const handleConfirm = async () => {
     const items = {
+      id: Date.now(),
+      date: new Date().toLocaleDateString(),
       total: await total,
       cart: await cart,
       user: await user,
     };
-    const totalOrder = await total;
     dispatch(confirmPurchase(items));
+    setModalOpen(true);
+    if (items.total != 0)
+      setDataOrder({
+        id: items.id,
+        date: items.date,
+        total: items.total,
+      });
   };
 
+  const handleClose = () => {
+    setDataOrder({
+      id: null,
+      date: null,
+      total: 0,
+    });
+    dispatch(cleanItem());
+    setModalOpen(false);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.list}>
@@ -58,6 +83,23 @@ const CartScreen = () => {
           </View>
         </TouchableOpacity>
       </View>
+      <Modal style={styles.modal} visible={modalOpen} animationType="slide">
+        <View style={styles.modalContainer}>
+          {dataOrder.total !== 0 && (
+            <View style={styles.order}>
+              <Text style={styles.text}>Order: {dataOrder.id}</Text>
+              <Text style={styles.text}>Fecha: {dataOrder.date}</Text>
+              <Text style={styles.text}>Total: ${dataOrder.total}</Text>
+            </View>
+          )}
+          {cart.length == 0 && (
+            <View style={styles.order}>
+              <Text style={styles.text}>No tiene productos en el carrito</Text>
+            </View>
+          )}
+          <CustomButton title={"Close"} onPress={handleClose} />
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -94,5 +136,19 @@ const styles = StyleSheet.create({
     fontSize: 18,
     padding: 8,
     color: colors.white,
+  },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: colors.yellow,
+  },
+  order: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: 400,
+    backgroundColor: colors.blue,
+    margin: 30,
+    borderRadius: 20,
+    colors: colors.white,
+    marginTop: 200,
   },
 });

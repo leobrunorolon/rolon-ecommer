@@ -18,8 +18,8 @@ export const confirmPurchase = createAsyncThunk(
       const res = await fetch(`${DB_URL}orders.json`, {
         method: "POST",
         body: JSON.stringify({
-          id: Date.now(),
-          date: new Date().toLocaleDateString(),
+          id: items.id,
+          date: items.date,
           user: items.user,
           item: items.cart,
           total: items.total,
@@ -67,6 +67,9 @@ export const cartSlice = createSlice({
       });
       state.value.total = total.toFixed(2);
     },
+    cleanItem: (state, _) => {
+      state.value = initialState.value;
+    },
   },
   extraReducers: {
     [confirmPurchase.pending]: (state) => {
@@ -83,6 +86,6 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addItem, removeItem, totalItem } = cartSlice.actions;
+export const { addItem, removeItem, totalItem, cleanItem } = cartSlice.actions;
 
 export default cartSlice.reducer;

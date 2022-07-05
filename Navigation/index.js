@@ -10,7 +10,7 @@ const MainNavigator = () => {
   return (
     <NavigationContainer>
       <SafeAreaView style={{ flex: 1 }}>
-        {true ? <TabNavigatorLogged /> : <AuthStack />}
+        {user.mail ? <TabNavigatorLogged /> : <AuthStack />}
       </SafeAreaView>
     </NavigationContainer>
   );
